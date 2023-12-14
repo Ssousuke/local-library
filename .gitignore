@@ -1,0 +1,48 @@
+# Arquivos temporários
+**/bin/
+**/obj/
+
+# Arquivos de compilação
+*.exe
+*.pdb
+*.dll
+*.dll.mdb
+*.rar
+*.zip
+*.7z
+*.tar.gz
+*.iso
+*.xap
+
+# Logs e arquivos de depuração
+*.log
+*.swp
+*.suo
+*.cache
+*.ipch
+*.suo
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Diretórios específicos
+[Tt]humbs.db
+[Dd]esktop.ini
+.vscode/
+.idea/
+.project
+.settings/
+.gradle/
+out/
+.vs/
+
+# Pacotes do NuGet
+packages/
+*.nupkg
+!.gitignore
+
+# Arquivos de configuração
+*.suo
+*.user
+*.useros
