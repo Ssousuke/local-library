@@ -46,3 +46,4 @@ packages/
 *.suo
 *.user
 *.useros
+/src/LocalLibrary.Infra.Data/Migrations
