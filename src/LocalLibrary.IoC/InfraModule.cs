@@ -1,6 +1,6 @@
 ﻿using LocalLibrary.Domain.IRepository;
 using LocalLibrary.Domain.Models;
-using LocalLibrary.Infra.Data.ContextDB;
+using LocalLibrary.Infra.Data.Context;
 using LocalLibrary.Infra.Data.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
