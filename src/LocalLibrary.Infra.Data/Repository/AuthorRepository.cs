@@ -2,7 +2,6 @@
 using LocalLibrary.Domain.Models;
 using LocalLibrary.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Data.Entity;
 
 namespace LocalLibrary.Infra.Data.Repository
 {
