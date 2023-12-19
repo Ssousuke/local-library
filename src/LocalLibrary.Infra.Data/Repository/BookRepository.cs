@@ -1,33 +1,82 @@
 ﻿using LocalLibrary.Domain.IRepository;
 using LocalLibrary.Domain.Models;
+using LocalLibrary.Infra.Data.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace LocalLibrary.Infra.Data.Repository
 {
-    public class BookRepository : IGenericRepository<Author>
+    public class BookRepository : IGenericRepository<Book>
     {
-        public Task AddAsync(Author entity)
+        private readonly ContextDB _context;
+
+        public BookRepository(ContextDB context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public bool DeleteByIsAsync(Guid id)
+        public async Task<Book> AddAsync(Book entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _context.Books.AddAsync(entity);
+                await _context.SaveChangesAsync();
+                return entity;
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new DbUpdateException($"Erro: Não foi possível atualizar ou inserir informações no banco. - {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro: Ocorreu um erro ao adicionar um autor. - {ex.Message}");
+            }
         }
 
-        public Task<IEnumerable<Author>> GetAll()
+        public async Task<bool> DeleteByIsAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var book = await _context.Books.SingleAsync(x => x.Id == id);
+            if (book != null)
+            {
+                try
+                {
+                    _context.Books.Remove(book);
+                    await _context.SaveChangesAsync();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Erro: Não foi possível deletar registro: {ex.Message}");
+                }
+            }
+            return false;
         }
 
-        public Task<Author> GetByIdAsync(Guid id)
+        public async Task<IEnumerable<Book>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _context.Books.ToListAsync();
         }
 
-        public Task UpdateAsync(Author entity)
+        public async Task<Book> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Books.SingleAsync(x => x.Id == id);
+        }
+
+        public async Task<Book> UpdateAsync(Book entity)
+        {
+            try
+            {
+                _context.Books.Update(entity);
+                await _context.SaveChangesAsync();
+                return entity;
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new DbUpdateException($"Erro: Não foi possível atualizar ou inserir informações no banco. - {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro: Ocorreu um erro ao atualizar um book. - {ex.Message}");
+            }
         }
     }
 }
