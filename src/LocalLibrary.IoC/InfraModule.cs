@@ -1,4 +1,5 @@
-﻿using LocalLibrary.Domain.IRepository;
+﻿using LocalLibrary.Application.Mappings;
+using LocalLibrary.Domain.IRepository;
 using LocalLibrary.Domain.Models;
 using LocalLibrary.Infra.Data.Context;
 using LocalLibrary.Infra.Data.Repository;
@@ -20,6 +21,8 @@ namespace LocalLibrary.IoC
             services.AddScoped(typeof(IGenericRepository<Book>), typeof(BookRepository));
             services.AddScoped(typeof(IGenericRepository<Genre>), typeof(GenreRepository));
             services.AddScoped(typeof(IGenericRepository<Language>), typeof(LanguageRepository));
+
+            services.AddAutoMapper(typeof(ProfileMap));
 
             return services;
 
