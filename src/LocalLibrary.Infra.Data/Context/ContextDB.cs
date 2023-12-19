@@ -1,7 +1,7 @@
 ﻿using LocalLibrary.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace LocalLibrary.Infra.Data.ContextDB
+namespace LocalLibrary.Infra.Data.Context
 {
     public class ContextDB : DbContext
     {
