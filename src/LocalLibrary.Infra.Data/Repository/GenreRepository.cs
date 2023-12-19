@@ -1,33 +1,82 @@
 ﻿using LocalLibrary.Domain.IRepository;
 using LocalLibrary.Domain.Models;
+using LocalLibrary.Infra.Data.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace LocalLibrary.Infra.Data.Repository
 {
     public class GenreRepository : IGenericRepository<Genre>
     {
-        public Task AddAsync(Genre entity)
+        private readonly ContextDB _context;
+
+        public GenreRepository(ContextDB context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public bool DeleteByIsAsync(Guid id)
+        public async Task<Genre> AddAsync(Genre entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _context.Genres.AddAsync(entity);
+                await _context.SaveChangesAsync();
+                return entity;
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new DbUpdateException($"Erro: Não foi possível atualizar ou inserir informações no banco. - {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro: Ocorreu um erro ao adicionar um genre. - {ex.Message}");
+            }
         }
 
-        public Task<IEnumerable<Genre>> GetAll()
+        public async Task<bool> DeleteByIsAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var genre = await _context.Genres.SingleAsync(x => x.Id == id);
+            if (genre != null)
+            {
+                try
+                {
+                    _context.Genres.Remove(genre);
+                    await _context.SaveChangesAsync();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Erro: Não foi possível deletar registro: {ex.Message}");
+                }
+            }
+            return false;
         }
 
-        public Task<Genre> GetByIdAsync(Guid id)
+        public async Task<IEnumerable<Genre>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _context.Genres.ToListAsync();
         }
 
-        public Task UpdateAsync(Genre entity)
+        public async Task<Genre> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Genres.SingleAsync(x => x.Id == id);
+        }
+
+        public async Task<Genre> UpdateAsync(Genre entity)
+        {
+            try
+            {
+                _context.Genres.Update(entity);
+                await _context.SaveChangesAsync();
+                return entity;
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new DbUpdateException($"Erro: Não foi possível atualizar ou inserir informações no banco. - {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro: Ocorreu um erro ao adicionar um genre. - {ex.Message}");
+            }
         }
     }
 }
