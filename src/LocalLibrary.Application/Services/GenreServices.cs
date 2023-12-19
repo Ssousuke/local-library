@@ -1,33 +1,51 @@
-﻿using LocalLibrary.Application.DTO;
+﻿using AutoMapper;
+using LocalLibrary.Application.DTO;
 using LocalLibrary.Application.Services.IServices;
+using LocalLibrary.Domain.IRepository;
+using LocalLibrary.Domain.Models;
 
 namespace LocalLibrary.Application.Services
 {
     public class GenreServices : IGenericServices<GenreDTO>
     {
-        public Task<GenreDTO> Create(GenreDTO entity)
+        private readonly IGenericRepository<Genre> _respository;
+        private readonly IMapper _mapper;
+
+        public GenreServices(IGenericRepository<Genre> respository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _respository = respository;
+            _mapper = mapper;
         }
 
-        public bool DeleteById(Guid id)
+        public async Task<GenreDTO> Create(GenreDTO entity)
         {
-            throw new NotImplementedException();
+            var genreModel = _mapper.Map<Genre>(entity);
+            await _respository.AddAsync(genreModel);
+            return _mapper.Map<GenreDTO>(genreModel);
         }
 
-        public Task<IEnumerable<GenreDTO>> GetAll()
+        public async Task<bool> DeleteById(Guid id)
         {
-            throw new NotImplementedException();
+            return await _respository.DeleteByIsAsync(id);
         }
 
-        public Task<GenreDTO> GetById(Guid id)
+        public async Task<IEnumerable<GenreDTO>> GetAll()
         {
-            throw new NotImplementedException();
+            var genres = await _respository.GetAll();
+            return _mapper.Map<IEnumerable<GenreDTO>>(genres);
         }
 
-        public Task<GenreDTO> Update(GenreDTO entity)
+        public async Task<GenreDTO> GetById(Guid id)
         {
-            throw new NotImplementedException();
+            var genres = await _respository.GetByIdAsync(id);
+            return _mapper.Map<GenreDTO>(genres);
+        }
+
+        public async Task<GenreDTO> Update(GenreDTO entity)
+        {
+            var genreModel = _mapper.Map<Genre>(entity);
+            await _respository.UpdateAsync(genreModel);
+            return _mapper.Map<GenreDTO>(genreModel);
         }
     }
 }

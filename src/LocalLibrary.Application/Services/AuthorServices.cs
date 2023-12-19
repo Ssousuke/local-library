@@ -1,33 +1,51 @@
-﻿using LocalLibrary.Application.DTO;
+﻿using AutoMapper;
+using LocalLibrary.Application.DTO;
 using LocalLibrary.Application.Services.IServices;
+using LocalLibrary.Domain.IRepository;
+using LocalLibrary.Domain.Models;
 
 namespace LocalLibrary.Application.Services
 {
     public class AuthorServices : IGenericServices<AuthorDTO>
     {
-        public Task<AuthorDTO> Create(AuthorDTO entity)
+        private readonly IGenericRepository<Author> _repository;
+        private readonly IMapper _mapper;
+
+        public AuthorServices(IGenericRepository<Author> repository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _repository = repository;
+            _mapper = mapper;
         }
 
-        public bool DeleteById(Guid id)
+        public async Task<AuthorDTO> Create(AuthorDTO entity)
         {
-            throw new NotImplementedException();
+            var autorModel = _mapper.Map<Author>(entity);
+            await _repository.AddAsync(autorModel);
+            return _mapper.Map<AuthorDTO>(autorModel);
         }
 
-        public Task<IEnumerable<AuthorDTO>> GetAll()
+        public async Task<bool> DeleteById(Guid id)
         {
-            throw new NotImplementedException();
+            return await _repository.DeleteByIsAsync(id);
         }
 
-        public Task<AuthorDTO> GetById(Guid id)
+        public async Task<IEnumerable<AuthorDTO>> GetAll()
         {
-            throw new NotImplementedException();
+            var authorsModel = await _repository.GetAll();
+            return _mapper.Map<IEnumerable<AuthorDTO>>(authorsModel);
         }
 
-        public Task<AuthorDTO> Update(AuthorDTO entity)
+        public async Task<AuthorDTO> GetById(Guid id)
         {
-            throw new NotImplementedException();
+            var authorModel = await _repository.GetByIdAsync(id);
+            return _mapper.Map<AuthorDTO>(authorModel);
+        }
+
+        public async Task<AuthorDTO> Update(AuthorDTO entity)
+        {
+            var autorModel = _mapper.Map<Author>(entity);
+            await _repository.UpdateAsync(autorModel);
+            return _mapper.Map<AuthorDTO>(autorModel);
         }
     }
 }

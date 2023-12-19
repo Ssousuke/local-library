@@ -1,33 +1,51 @@
-﻿using LocalLibrary.Application.DTO;
+﻿using AutoMapper;
+using LocalLibrary.Application.DTO;
 using LocalLibrary.Application.Services.IServices;
+using LocalLibrary.Domain.IRepository;
+using LocalLibrary.Domain.Models;
 
 namespace LocalLibrary.Application.Services
 {
     public class BookServices : IGenericServices<BookDTO>
     {
-        public Task<BookDTO> Create(BookDTO entity)
+        private readonly IGenericRepository<Book> _respository;
+        private readonly IMapper _mapper;
+
+        public BookServices(IGenericRepository<Book> respository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _respository = respository;
+            _mapper = mapper;
         }
 
-        public bool DeleteById(Guid id)
+        public async Task<BookDTO> Create(BookDTO entity)
         {
-            throw new NotImplementedException();
+            var bookModel = _mapper.Map<Book>(entity);
+            await _respository.AddAsync(bookModel);
+            return _mapper.Map<BookDTO>(bookModel);
         }
 
-        public Task<IEnumerable<BookDTO>> GetAll()
+        public Task<bool> DeleteById(Guid id)
         {
-            throw new NotImplementedException();
+            return _respository.DeleteByIsAsync(id);
         }
 
-        public Task<BookDTO> GetById(Guid id)
+        public async Task<IEnumerable<BookDTO>> GetAll()
         {
-            throw new NotImplementedException();
+            var bookModel = await _respository.GetAll();
+            return _mapper.Map<IEnumerable<BookDTO>>(bookModel);
         }
 
-        public Task<BookDTO> Update(BookDTO entity)
+        public async Task<BookDTO> GetById(Guid id)
         {
-            throw new NotImplementedException();
+            var bookModel = _respository.GetByIdAsync(id);
+            return _mapper.Map<BookDTO>(bookModel);
+        }
+
+        public async Task<BookDTO> Update(BookDTO entity)
+        {
+            var bookModel = _mapper.Map<Book>(entity);
+            await _respository.UpdateAsync(bookModel);
+            return _mapper.Map<BookDTO>(bookModel);
         }
     }
 }

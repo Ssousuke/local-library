@@ -1,33 +1,52 @@
-﻿using LocalLibrary.Application.DTO;
+﻿using AutoMapper;
+using LocalLibrary.Application.DTO;
 using LocalLibrary.Application.Services.IServices;
+using LocalLibrary.Domain.IRepository;
+using LocalLibrary.Domain.Models;
+using LocalLibrary.Infra.Data.Repository;
 
 namespace LocalLibrary.Application.Services
 {
     public class LanguageServices : IGenericServices<LanguageDTO>
     {
-        public Task<LanguageDTO> Create(LanguageDTO entity)
+        private readonly IGenericRepository<Language> _respository;
+        private readonly IMapper _mapper;
+
+        public LanguageServices(IGenericRepository<Language> respository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _respository = respository;
+            _mapper = mapper;
         }
 
-        public bool DeleteById(Guid id)
+        public async Task<LanguageDTO> Create(LanguageDTO entity)
         {
-            throw new NotImplementedException();
+            var languageModel = _mapper.Map<Language>(entity);
+            var languageDTO = await _respository.AddAsync(languageModel);
+            return await Task.FromResult(_mapper.Map<LanguageDTO>(languageDTO));
         }
 
-        public Task<IEnumerable<LanguageDTO>> GetAll()
+        public async Task<bool> DeleteById(Guid id)
         {
-            throw new NotImplementedException();
+            return await _respository.DeleteByIsAsync(id);
         }
 
-        public Task<LanguageDTO> GetById(Guid id)
+        public async Task<IEnumerable<LanguageDTO>> GetAll()
         {
-            throw new NotImplementedException();
+            var languageModel = await _respository.GetAll();
+            return await Task.FromResult(_mapper.Map<IEnumerable<LanguageDTO>>(languageModel));
         }
 
-        public Task<LanguageDTO> Update(LanguageDTO entity)
+        public async Task<LanguageDTO> GetById(Guid id)
         {
-            throw new NotImplementedException();
+            var languageModel = await _respository.GetByIdAsync(id);
+            return await Task.FromResult(_mapper.Map<LanguageDTO>(languageModel));
+        }
+
+        public async Task<LanguageDTO> Update(LanguageDTO entity)
+        {
+            var languageModel = _mapper.Map<Language>(entity);
+            var languageDTO = await _respository.UpdateAsync(languageModel);
+            return await Task.FromResult(_mapper.Map<LanguageDTO>(languageDTO));
         }
     }
 }
