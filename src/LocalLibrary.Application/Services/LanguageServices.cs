@@ -3,7 +3,6 @@ using LocalLibrary.Application.DTO;
 using LocalLibrary.Application.Services.IServices;
 using LocalLibrary.Domain.IRepository;
 using LocalLibrary.Domain.Models;
-using LocalLibrary.Infra.Data.Repository;
 
 namespace LocalLibrary.Application.Services
 {
