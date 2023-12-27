@@ -1,8 +1,12 @@
-﻿namespace LocalLibrary.Domain.Models
+﻿using System.Runtime.Serialization;
+
+namespace LocalLibrary.Domain.Models
 {
     public class Language : BaseModel
     {
         public string Name { get; private set; }
-        public IEnumerable<Book> Books { get; private set; }
+
+        [IgnoreDataMember]
+        public IEnumerable<Book>? Books { get; private set; }
     }
 }
