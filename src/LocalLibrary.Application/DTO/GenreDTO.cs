@@ -5,6 +5,6 @@ namespace LocalLibrary.Application.DTO
     public class GenreDTO : BaseDTO
     {
         [JsonPropertyName("nome")]
-        public string Name { get; private set; }
+        public string Name { get; set; }
     }
 }

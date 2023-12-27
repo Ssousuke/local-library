@@ -1,20 +1,17 @@
-﻿using LocalLibrary.Domain.Models;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace LocalLibrary.Application.DTO
 {
     public class AuthorDTO : BaseDTO
     {
         [JsonPropertyName("nome")]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         [JsonPropertyName("data-nascimento")]
-        public DateTime DateOfBirth { get; private set; }
+        public DateTime DateOfBirth { get; set; }
 
         [JsonPropertyName("data-morte")]
-        public DateTime? DateOfDeath { get; private set; }
+        public DateTime? DateOfDeath { get; set; }
 
-        [JsonIgnore]
-        public IEnumerable<Book> Books { get; private set; }
     }
 }

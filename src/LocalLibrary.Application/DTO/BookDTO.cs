@@ -1,35 +1,25 @@
-﻿using LocalLibrary.Domain.Models;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace LocalLibrary.Application.DTO
 {
     public class BookDTO : BaseDTO
     {
         [JsonPropertyName("titulo")]
-        public string Title { get; private set; }
+        public string Title { get; set; }
 
         [JsonPropertyName("sumario")]
-        public string Summary { get; private set; }
+        public string Summary { get; set; }
 
         [JsonPropertyName("isbn")]
-        public string ISBN { get; private set; }
-
-        [JsonPropertyName("autor")]
-        public Author Author { get; private set; }
+        public string ISBN { get; set; }
 
         [JsonPropertyName("autor-id")]
-        public Guid AuthorId { get; private set; }
-
-        [JsonPropertyName("genero")]
-        public Genre Genre { get; private set; }
+        public Guid AuthorId { get; set; }
 
         [JsonPropertyName("genero-id")]
-        public Guid GenreId { get; private set; }
-
-        [JsonPropertyName("linguagem")]
-        public Language Language { get; private set; }
+        public Guid GenreId { get; set; }
 
         [JsonPropertyName("linguagem-id")]
-        public Guid LanguageId { get; private set; }
+        public Guid LanguageId { get; set; }
     }
 }
