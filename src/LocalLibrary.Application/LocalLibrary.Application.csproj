@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\LocalLibrary.Domain\LocalLibrary.Domain.csproj" />
     <ProjectReference Include="..\LocalLibrary.Infra.Data\LocalLibrary.Infra.Data.csproj" />
+    <ProjectReference Include="..\LocalLibrary.MessageBus\LocalLibrary.MessageBus.csproj" />
   </ItemGroup>
 
 </Project>
