@@ -5,7 +5,7 @@ If you want to view the original project, go to : [MDN django tutorial](https://
 
 - This project is entirely made in .NET.
 - You need docker installed on your system
-- You need install Docker in your System. Up Docker see the Magic.
+- Up Docker see the Magic.
 
 ## Features ENDPOINTS
 Basically this application is a CRUD, so don't expect anything complex.
