@@ -47,3 +47,4 @@ packages/
 *.user
 *.useros
 /src/LocalLibrary.Infra.Data/Migrations
+/src/LocalLibrary.API/appsettings.json
