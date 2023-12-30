@@ -44,8 +44,7 @@ namespace LocalLibrary.Application.Services
         public async Task<BookDTO> Update(BookDTO entity)
         {
             var bookModel = _mapper.Map<Book>(entity);
-            await _respository.UpdateAsync(bookModel);
-            return _mapper.Map<BookDTO>(bookModel);
+            return _mapper.Map<BookDTO>(await _respository.UpdateAsync(bookModel));
         }
     }
 }
