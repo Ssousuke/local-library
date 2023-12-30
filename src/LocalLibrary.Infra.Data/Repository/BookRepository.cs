@@ -65,9 +65,18 @@ namespace LocalLibrary.Infra.Data.Repository
         {
             try
             {
-                _context.Books.Update(entity);
-                await _context.SaveChangesAsync();
-                return entity;
+                var existingEntity = await _context.Books.FindAsync(entity.Id);
+
+                if (existingEntity != null)
+                {
+                    _context.Entry(existingEntity).CurrentValues.SetValues(entity);
+                    await _context.SaveChangesAsync();
+                    return existingEntity;
+                }
+                else
+                {
+                    throw new InvalidOperationException("Não possível localizar o Book especificado.");
+                }
             }
             catch (DbUpdateException ex)
             {
@@ -78,5 +87,6 @@ namespace LocalLibrary.Infra.Data.Repository
                 throw new Exception($"Erro: Ocorreu um erro ao atualizar um book. - {ex.Message}");
             }
         }
+
     }
 }
