@@ -1,12 +1,9 @@
-using LocalLibrary.API.RabbitMQSender;
-using LocalLibrary.Application.DTO;
 using LocalLibrary.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddInfraestructure(builder.Configuration);
-builder.Services.AddSingleton<IRabbitMQMessageSender<BookDTO>, RabbitMQMessageSender<BookDTO>>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
