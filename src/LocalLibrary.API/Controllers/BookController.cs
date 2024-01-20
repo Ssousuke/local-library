@@ -1,5 +1,4 @@
-﻿using LocalLibrary.API.RabbitMQSender;
-using LocalLibrary.Application.DTO;
+﻿using LocalLibrary.Application.DTO;
 using LocalLibrary.Application.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,12 +8,10 @@ namespace LocalLibrary.API.Controllers
     [ApiController]
     public class BookController : ControllerBase
     {
-        private readonly IRabbitMQMessageSender<BookDTO> _rabbitMQSender;
         private readonly IGenericServices<BookDTO> _services;
 
-        public BookController(IRabbitMQMessageSender<BookDTO> rabbitMQSender, IGenericServices<BookDTO> services)
+        public BookController(IGenericServices<BookDTO> services)
         {
-            _rabbitMQSender = rabbitMQSender;
             _services = services;
         }
 
@@ -22,7 +19,6 @@ namespace LocalLibrary.API.Controllers
         public async Task<IActionResult> GetBooks()
         {
             var books = await _services.GetAll();
-            _rabbitMQSender.SendMessage(books, "books");
             return Ok(books);
         }
 

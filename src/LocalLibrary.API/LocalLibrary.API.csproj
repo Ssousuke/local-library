@@ -14,7 +14,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\LocalLibrary.Application\LocalLibrary.Application.csproj" />
 		<ProjectReference Include="..\LocalLibrary.IoC\LocalLibrary.IoC.csproj" />
-		<ProjectReference Include="..\LocalLibrary.MessageBus\LocalLibrary.MessageBus.csproj" />
 	</ItemGroup>
 
 </Project>
