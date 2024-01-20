@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace LocalLibrary.IoC
 {
-    public static class InfraModule
+    public static class Ioc
     {
         public static IServiceCollection AddInfraestructure(this IServiceCollection services, IConfiguration config)
         {
