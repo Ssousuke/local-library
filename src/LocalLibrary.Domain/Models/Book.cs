@@ -32,7 +32,7 @@ namespace LocalLibrary.Domain.Models
             iSBN = ValidateFields.CheckAndRemoveSpecialCharacters(iSBN);
 
             // Validate length properties
-            DomainException.When(title.Length > 150, "max length is 150");
+            DomainException.When(title.Length > 50, "max length is 150");
             DomainException.When(summary.Length > 255, "max length is 255");
             DomainException.When(iSBN.Length > 13, "max length is 13");
 

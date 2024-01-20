@@ -1,5 +1,4 @@
 ﻿using LocalLibrary.Domain.ValidationDomainException;
-using System.Runtime.Serialization;
 
 namespace LocalLibrary.Domain.Models
 {
@@ -9,7 +8,6 @@ namespace LocalLibrary.Domain.Models
         public DateTime DateOfBirth { get; private set; }
         public DateTime? DateOfDeath { get; private set; }
 
-        [IgnoreDataMember]
         public IEnumerable<Book> Books { get; private set; }
 
         public void ValidateDomain(string name, DateTime dateOfBirth, DateTime? dateOfDeath)
@@ -18,17 +16,16 @@ namespace LocalLibrary.Domain.Models
             DomainException.When(dateOfBirth > DateTime.Now, "date of birth cannot be greater than current date.");
             DomainException.When(dateOfDeath > DateTime.Now, "date of death cannot be greater than current date.");
 
-            DomainException.When(name.Length > 75, "max length is 75");
+            DomainException.When(name.Length > 50, "max length is 50");
 
             Name = name;
             DateOfBirth = dateOfBirth;
             DateOfDeath = dateOfDeath;
         }
 
-        public Author(string name, DateTime dateOfBirth, DateTime? dateOfDeath)
+        public Author(string name, DateTime dateOfBirth, DateTime? dateOfDeath = null)
         {
             ValidateDomain(name, dateOfBirth, dateOfDeath);
         }
     }
-
 }
