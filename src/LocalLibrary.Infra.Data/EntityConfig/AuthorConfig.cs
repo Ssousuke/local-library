@@ -11,7 +11,7 @@ namespace LocalLibrary.Infra.Data.EntityConfig
             builder.HasKey(x => x.Id);
             builder.Property(x => x.CreatedAt);
             builder.Property(x => x.UpdatedAt);
-            builder.Property(x => x.Name).HasMaxLength(75).IsRequired();
+            builder.Property(x => x.Name).HasMaxLength(50).IsRequired();
             builder.Property(x => x.DateOfBirth).IsRequired();
             builder.Property(x => x.DateOfDeath);
         }
