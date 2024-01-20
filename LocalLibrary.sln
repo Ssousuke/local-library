@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalLibrary.Domain", "LocalLibrary.Domain\LocalLibrary.Domain.csproj", "{802A2E3B-C54E-4D3F-A971-0646DEB629AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalLibrary.Domain", "src\LocalLibrary.Domain\LocalLibrary.Domain.csproj", "{802A2E3B-C54E-4D3F-A971-0646DEB629AA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalLibrary.Infra.Data", "LocalLibrary.Infra.Data\LocalLibrary.Infra.Data.csproj", "{3B406E00-F8A9-46D2-B6A8-A62E8B84CB41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalLibrary.Infra.Data", "src\LocalLibrary.Infra.Data\LocalLibrary.Infra.Data.csproj", "{3B406E00-F8A9-46D2-B6A8-A62E8B84CB41}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalLibrary.IoC", "LocalLibrary.IoC\LocalLibrary.IoC.csproj", "{8887C963-2C93-4D37-9B05-60FECB68B976}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalLibrary.IoC", "src\LocalLibrary.IoC\LocalLibrary.IoC.csproj", "{8887C963-2C93-4D37-9B05-60FECB68B976}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalLibrary.Application", "LocalLibrary.Application\LocalLibrary.Application.csproj", "{0B68328A-FDFE-4137-ACA1-0598F71DB34D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalLibrary.Application", "src\LocalLibrary.Application\LocalLibrary.Application.csproj", "{0B68328A-FDFE-4137-ACA1-0598F71DB34D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalLibrary.API", "LocalLibrary.API\LocalLibrary.API.csproj", "{C2066287-B292-47B1-B089-1E52B8418DBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalLibrary.API", "src\LocalLibrary.API\LocalLibrary.API.csproj", "{C2066287-B292-47B1-B089-1E52B8418DBA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalLibrary.MessageBus", "LocalLibrary.MessageBus\LocalLibrary.MessageBus.csproj", "{0E1A57DF-5806-4E67-9A70-54E0CD592684}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8C2BB0DB-B467-4D72-84AE-B7D4B8E8154F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainTest", "test\DomainTest\DomainTest.csproj", "{BA3D3E99-BDBC-4040-B301-0F042913B89B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,15 +43,18 @@ Global
 		{C2066287-B292-47B1-B089-1E52B8418DBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2066287-B292-47B1-B089-1E52B8418DBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2066287-B292-47B1-B089-1E52B8418DBA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0E1A57DF-5806-4E67-9A70-54E0CD592684}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0E1A57DF-5806-4E67-9A70-54E0CD592684}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0E1A57DF-5806-4E67-9A70-54E0CD592684}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0E1A57DF-5806-4E67-9A70-54E0CD592684}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA3D3E99-BDBC-4040-B301-0F042913B89B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA3D3E99-BDBC-4040-B301-0F042913B89B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA3D3E99-BDBC-4040-B301-0F042913B89B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA3D3E99-BDBC-4040-B301-0F042913B89B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {57F32890-C9BA-4DEA-8C74-B937A6493156}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BA3D3E99-BDBC-4040-B301-0F042913B89B} = {8C2BB0DB-B467-4D72-84AE-B7D4B8E8154F}
 	EndGlobalSection
 EndGlobal
