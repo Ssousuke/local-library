@@ -1,51 +1,64 @@
 ﻿using AutoMapper;
+using LocalLibrary.Application.CQRS.Language.Commands;
+using LocalLibrary.Application.CQRS.Language.Queries;
 using LocalLibrary.Application.DTO;
 using LocalLibrary.Application.Services.IServices;
-using LocalLibrary.Domain.IRepository;
-using LocalLibrary.Domain.Models;
+using MediatR;
 
 namespace LocalLibrary.Application.Services
 {
     public class LanguageServices : IGenericServices<LanguageDTO>
     {
-        private readonly IGenericRepository<Language> _respository;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public LanguageServices(IGenericRepository<Language> respository, IMapper mapper)
+        public LanguageServices(IMapper mapper, IMediator mediator)
         {
-            _respository = respository;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         public async Task<LanguageDTO> Create(LanguageDTO entity)
         {
-            var languageModel = _mapper.Map<Language>(entity);
-            var languageDTO = await _respository.AddAsync(languageModel);
-            return await Task.FromResult(_mapper.Map<LanguageDTO>(languageDTO));
+            var genreCreateCommand = _mapper.Map<LanguageCreateCommand>(entity);
+            var result = await _mediator.Send(genreCreateCommand);
+            return _mapper.Map<LanguageDTO>(result);
         }
 
         public async Task<bool> DeleteById(Guid id)
         {
-            return await _respository.DeleteByIdAsync(id);
+            var languageRemoveCommand = new LanguageRemoveCommand(id);
+            if (languageRemoveCommand == null)
+                throw new Exception("Entity could not be loaded.");
+
+            return await _mediator.Send(languageRemoveCommand);
         }
 
         public async Task<IEnumerable<LanguageDTO>> GetAll()
         {
-            var languageModel = await _respository.GetAll();
-            return await Task.FromResult(_mapper.Map<IEnumerable<LanguageDTO>>(languageModel));
+            var languageQuery = new GetLanguageQuery();
+            if (languageQuery == null)
+                throw new Exception("Entity could not be loaded.");
+
+            var result = await _mediator.Send(languageQuery);
+            return _mapper.Map<IEnumerable<LanguageDTO>>(result);
         }
 
         public async Task<LanguageDTO> GetById(Guid id)
         {
-            var languageModel = await _respository.GetByIdAsync(id);
-            return await Task.FromResult(_mapper.Map<LanguageDTO>(languageModel));
+            var languageQueryById = new GetLanguageByIdQuery(id);
+            if (languageQueryById == null)
+                throw new Exception("Entity could not be loaded.");
+
+            var result = await _mediator.Send(languageQueryById);
+            return _mapper.Map<LanguageDTO>(result);
         }
 
         public async Task<LanguageDTO> Update(LanguageDTO entity)
         {
-            var languageModel = _mapper.Map<Language>(entity);
-            var languageDTO = await _respository.UpdateAsync(languageModel);
-            return await Task.FromResult(_mapper.Map<LanguageDTO>(languageDTO));
+            var genreUpdateCommand = _mapper.Map<LanguageUpdateCommand>(entity);
+            var result = await _mediator.Send(genreUpdateCommand);
+            return _mapper.Map<LanguageDTO>(result);
         }
     }
 }

@@ -1,51 +1,65 @@
 ﻿using AutoMapper;
+using LocalLibrary.Application.CQRS.Book.Commands;
+using LocalLibrary.Application.CQRS.Genre.Commands;
+using LocalLibrary.Application.CQRS.Genre.Queries;
 using LocalLibrary.Application.DTO;
 using LocalLibrary.Application.Services.IServices;
-using LocalLibrary.Domain.IRepository;
-using LocalLibrary.Domain.Models;
+using MediatR;
 
 namespace LocalLibrary.Application.Services
 {
     public class GenreServices : IGenericServices<GenreDTO>
     {
-        private readonly IGenericRepository<Genre> _respository;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public GenreServices(IGenericRepository<Genre> respository, IMapper mapper)
+        public GenreServices(IMapper mapper, IMediator mediator)
         {
-            _respository = respository;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         public async Task<GenreDTO> Create(GenreDTO entity)
         {
-            var genreModel = _mapper.Map<Genre>(entity);
-            await _respository.AddAsync(genreModel);
-            return _mapper.Map<GenreDTO>(genreModel);
+            var genreCreateCommand = _mapper.Map<BookUpdateCommand>(entity);
+            var result = await _mediator.Send(genreCreateCommand);
+            return _mapper.Map<GenreDTO>(result);
         }
 
         public async Task<bool> DeleteById(Guid id)
         {
-            return await _respository.DeleteByIdAsync(id);
+            var genreRemoveCommand = new GenreRemoveCommand(id);
+            if (genreRemoveCommand == null)
+                throw new Exception("Entity could not be loaded.");
+
+            return await _mediator.Send(genreRemoveCommand);
         }
 
         public async Task<IEnumerable<GenreDTO>> GetAll()
         {
-            var genres = await _respository.GetAll();
-            return _mapper.Map<IEnumerable<GenreDTO>>(genres);
+            var genreByIdQuery = new GetGenresQuery();
+            if (genreByIdQuery == null)
+                throw new Exception("Entity could not be loaded.");
+
+            var result = await _mediator.Send(genreByIdQuery);
+            return _mapper.Map<IEnumerable<GenreDTO>>(result);
         }
 
         public async Task<GenreDTO> GetById(Guid id)
         {
-            var genres = await _respository.GetByIdAsync(id);
-            return _mapper.Map<GenreDTO>(genres);
+            var genreByIdQuery = new GetGenreByIdQuery(id);
+            if (genreByIdQuery == null)
+                throw new Exception("Entity could not be loaded.");
+
+            var result = await _mediator.Send(genreByIdQuery);
+            return _mapper.Map<GenreDTO>(result);
         }
 
         public async Task<GenreDTO> Update(GenreDTO entity)
         {
-            var genreModel = _mapper.Map<Genre>(entity);
-            await _respository.UpdateAsync(genreModel);
-            return _mapper.Map<GenreDTO>(genreModel);
+            var genreUpdateCommand = _mapper.Map<BookUpdateCommand>(entity);
+            var result = await _mediator.Send(genreUpdateCommand);
+            return _mapper.Map<GenreDTO>(result);
         }
     }
 }

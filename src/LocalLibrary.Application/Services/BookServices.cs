@@ -1,50 +1,64 @@
 ﻿using AutoMapper;
+using LocalLibrary.Application.CQRS.Author.Queries;
+using LocalLibrary.Application.CQRS.Book.Commands;
 using LocalLibrary.Application.DTO;
 using LocalLibrary.Application.Services.IServices;
-using LocalLibrary.Domain.IRepository;
-using LocalLibrary.Domain.Models;
+using MediatR;
 
 namespace LocalLibrary.Application.Services
 {
     public class BookServices : IGenericServices<BookDTO>
     {
-        private readonly IGenericRepository<Book> _respository;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public BookServices(IGenericRepository<Book> respository, IMapper mapper)
+        public BookServices(IMapper mapper, IMediator mediator)
         {
-            _respository = respository;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         public async Task<BookDTO> Create(BookDTO entity)
         {
-            var bookModel = _mapper.Map<Book>(entity);
-            await _respository.AddAsync(bookModel);
-            return _mapper.Map<BookDTO>(bookModel);
+            var bookCreateCommand = _mapper.Map<BookCreateCommand>(entity);
+            var result = await _mediator.Send(bookCreateCommand);
+            return _mapper.Map<BookDTO>(result);
         }
 
-        public Task<bool> DeleteById(Guid id)
+        public async Task<bool> DeleteById(Guid id)
         {
-            return _respository.DeleteByIdAsync(id);
+            var bookRemoveCommand = new BookRemoveCommand(id);
+            if (bookRemoveCommand == null)
+                throw new Exception("Entity could not be loaded.");
+
+            return await _mediator.Send(bookRemoveCommand);
         }
 
         public async Task<IEnumerable<BookDTO>> GetAll()
         {
-            var bookModel = await _respository.GetAll();
-            return _mapper.Map<IEnumerable<BookDTO>>(bookModel);
+            var book = new GetAuthorsQuery();
+            if (book == null)
+                throw new Exception("Entity could not be loaded.");
+
+            var result = await _mediator.Send(book);
+            return _mapper.Map<IEnumerable<BookDTO>>(result);
         }
 
         public async Task<BookDTO> GetById(Guid id)
         {
-            var bookModel = _respository.GetByIdAsync(id);
-            return _mapper.Map<BookDTO>(bookModel);
+            var book = new GetAuthorByIdQuery(id);
+            if (book == null)
+                throw new Exception("Entity could not be loaded.");
+
+            var result = await _mediator.Send(book);
+            return _mapper.Map<BookDTO>(result);
         }
 
         public async Task<BookDTO> Update(BookDTO entity)
         {
-            var bookModel = _mapper.Map<Book>(entity);
-            return _mapper.Map<BookDTO>(await _respository.UpdateAsync(bookModel));
+            var bookUpdateCommand = _mapper.Map<BookUpdateCommand>(entity);
+            var result = await _mediator.Send(bookUpdateCommand);
+            return _mapper.Map<BookDTO>(result);
         }
     }
 }
