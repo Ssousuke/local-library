@@ -1,4 +1,5 @@
 ﻿using LocalLibrary.Domain.ValidationDomainException;
+using System.Runtime.Serialization;
 
 namespace LocalLibrary.Domain.Models
 {
@@ -8,7 +9,8 @@ namespace LocalLibrary.Domain.Models
         public DateTime DateOfBirth { get; private set; }
         public DateTime? DateOfDeath { get; private set; }
 
-        public IEnumerable<Book> Books { get; private set; }
+        [IgnoreDataMember]
+        public IEnumerable<Book>? Books { get; private set; }
 
         public void ValidateDomain(string name, DateTime dateOfBirth, DateTime? dateOfDeath)
         {
