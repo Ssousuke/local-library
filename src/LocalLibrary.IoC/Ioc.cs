@@ -1,5 +1,4 @@
-﻿using LocalLibrary.Application.DTO;
-using LocalLibrary.Application.Mappings;
+﻿using LocalLibrary.Application.Mappings;
 using LocalLibrary.Application.Services;
 using LocalLibrary.Application.Services.IServices;
 using LocalLibrary.Domain.IRepository;
@@ -26,10 +25,11 @@ namespace LocalLibrary.IoC
             services.AddScoped(typeof(IGenericRepository<Genre>), typeof(GenreRepository));
             services.AddScoped(typeof(IGenericRepository<Language>), typeof(LanguageRepository));
 
-            services.AddScoped(typeof(IGenericServices<AuthorDTO>), typeof(AuthorServices));
-            services.AddScoped(typeof(IGenericServices<BookDTO>), typeof(BookServices));
-            services.AddScoped(typeof(IGenericServices<GenreDTO>), typeof(GenreServices));
-            services.AddScoped(typeof(IGenericServices<LanguageDTO>), typeof(LanguageServices));
+            services.AddScoped<IAuthorServices, AuthorServices>();
+            services.AddScoped<IBookServices, BookServices>();
+            services.AddScoped<ILanguageServices, LanguageServices>();
+            services.AddScoped<IGenreServices, GenreServices>();
+
 
             var myHandler = AppDomain.CurrentDomain.Load("LocalLibrary.Application");
             services.AddMediatR(x => x.RegisterServicesFromAssemblies(myHandler));
