@@ -48,3 +48,4 @@ packages/
 *.useros
 /src/LocalLibrary.Infra.Data/Migrations
 /src/LocalLibrary.API/appsettings.json
+/src/LocalLibrary.API/appsettings.Development.json
