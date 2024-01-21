@@ -49,6 +49,12 @@ namespace LocalLibrary.Domain.Models
             ValidateDomain(title, summary, iSBN, authorId, genreId, languageId);
         }
 
+        public Book(Guid id, string title, string summary, string iSBN, Guid authorId, Guid genreId, Guid languageId)
+        {
+            ValidateDomain(title, summary, iSBN, authorId, genreId, languageId);
+            this.Id = id;
+        }
+
         public void UpdateTitle(string newTitle)
         {
             DomainException.When(string.IsNullOrEmpty(newTitle), "title cannot be null");

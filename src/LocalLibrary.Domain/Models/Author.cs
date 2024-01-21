@@ -27,5 +27,12 @@ namespace LocalLibrary.Domain.Models
         {
             ValidateDomain(name, dateOfBirth, dateOfDeath);
         }
+
+
+        public Author(Guid id, string name, DateTime dateOfBirth, DateTime? dateOfDeath = null)
+        {
+            ValidateDomain(name, dateOfBirth, dateOfDeath);
+            this.Id = id;
+        }
     }
 }

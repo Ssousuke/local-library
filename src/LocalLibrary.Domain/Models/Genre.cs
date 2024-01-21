@@ -24,5 +24,10 @@ namespace LocalLibrary.Domain.Models
             ValidateDomain(name);
         }
 
+        public Genre(Guid id, string name)
+        {
+            ValidateDomain(name);
+            this.Id = id;
+        }
     }
 }

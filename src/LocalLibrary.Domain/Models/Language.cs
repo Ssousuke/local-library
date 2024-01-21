@@ -23,5 +23,11 @@ namespace LocalLibrary.Domain.Models
         {
             ValidateDomain(name);
         }
+
+        public Language(Guid id, string name)
+        {
+            ValidateDomain(name);
+            this.Id = id;
+        }
     }
 }
