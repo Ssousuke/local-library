@@ -13,13 +13,13 @@ namespace LocalLibrary.Application.DTO
         [JsonPropertyName("isbn")]
         public string ISBN { get; set; }
 
-        [JsonPropertyName("autor-id")]
-        public Guid AuthorId { get; set; }
+        [JsonPropertyName("autor")]
+        public AuthorDTO Author { get; set; }
 
-        [JsonPropertyName("genero-id")]
-        public Guid GenreId { get; set; }
+        [JsonPropertyName("genero")]
+        public GenreDTO Genre { get; set; }
 
-        [JsonPropertyName("linguagem-id")]
-        public Guid LanguageId { get; set; }
+        [JsonPropertyName("linguagem")]
+        public LanguageDTO Language { get; set; }
     }
 }
