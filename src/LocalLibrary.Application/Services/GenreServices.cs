@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using LocalLibrary.Application.CQRS.Book.Commands;
 using LocalLibrary.Application.CQRS.Genre.Commands;
 using LocalLibrary.Application.CQRS.Genre.Queries;
 using LocalLibrary.Application.DTO;
@@ -8,7 +7,7 @@ using MediatR;
 
 namespace LocalLibrary.Application.Services
 {
-    public class GenreServices : IGenericServices<GenreDTO>
+    public class GenreServices : IGenreServices
     {
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
@@ -19,10 +18,9 @@ namespace LocalLibrary.Application.Services
             _mediator = mediator;
         }
 
-        public async Task<GenreDTO> Create(GenreDTO entity)
+        public async Task<GenreDTO> Create(GenreCreateCommand entity)
         {
-            var genreCreateCommand = _mapper.Map<BookUpdateCommand>(entity);
-            var result = await _mediator.Send(genreCreateCommand);
+            var result = await _mediator.Send(entity);
             return _mapper.Map<GenreDTO>(result);
         }
 
@@ -55,10 +53,9 @@ namespace LocalLibrary.Application.Services
             return _mapper.Map<GenreDTO>(result);
         }
 
-        public async Task<GenreDTO> Update(GenreDTO entity)
+        public async Task<GenreDTO> Update(GenreUpdateCommand entity)
         {
-            var genreUpdateCommand = _mapper.Map<BookUpdateCommand>(entity);
-            var result = await _mediator.Send(genreUpdateCommand);
+            var result = await _mediator.Send(entity);
             return _mapper.Map<GenreDTO>(result);
         }
     }

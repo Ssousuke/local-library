@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using LocalLibrary.Application.CQRS.Author.Queries;
 using LocalLibrary.Application.CQRS.Book.Commands;
+using LocalLibrary.Application.CQRS.Book.Queries;
 using LocalLibrary.Application.DTO;
 using LocalLibrary.Application.Services.IServices;
 using MediatR;
 
 namespace LocalLibrary.Application.Services
 {
-    public class BookServices : IGenericServices<BookDTO>
+    public class BookServices : IBookServices
     {
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
@@ -18,10 +19,9 @@ namespace LocalLibrary.Application.Services
             _mediator = mediator;
         }
 
-        public async Task<BookDTO> Create(BookDTO entity)
+        public async Task<BookDTO> Create(BookCreateCommand entity)
         {
-            var bookCreateCommand = _mapper.Map<BookCreateCommand>(entity);
-            var result = await _mediator.Send(bookCreateCommand);
+            var result = await _mediator.Send(entity);
             return _mapper.Map<BookDTO>(result);
         }
 
@@ -36,7 +36,7 @@ namespace LocalLibrary.Application.Services
 
         public async Task<IEnumerable<BookDTO>> GetAll()
         {
-            var book = new GetAuthorsQuery();
+            var book = new GetBooksQuery();
             if (book == null)
                 throw new Exception("Entity could not be loaded.");
 
@@ -54,10 +54,9 @@ namespace LocalLibrary.Application.Services
             return _mapper.Map<BookDTO>(result);
         }
 
-        public async Task<BookDTO> Update(BookDTO entity)
+        public async Task<BookDTO> Update(BookUpdateCommand entity)
         {
-            var bookUpdateCommand = _mapper.Map<BookUpdateCommand>(entity);
-            var result = await _mediator.Send(bookUpdateCommand);
+            var result = await _mediator.Send(entity);
             return _mapper.Map<BookDTO>(result);
         }
     }

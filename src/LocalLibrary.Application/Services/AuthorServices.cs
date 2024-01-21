@@ -7,7 +7,7 @@ using MediatR;
 
 namespace LocalLibrary.Application.Services
 {
-    public class AuthorServices : IGenericServices<AuthorDTO>
+    public class AuthorServices : IAuthorServices
     {
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
@@ -18,10 +18,9 @@ namespace LocalLibrary.Application.Services
             _mediator = mediator;
         }
 
-        public async Task<AuthorDTO> Create(AuthorDTO entity)
+        public async Task<AuthorDTO> Create(AuthorCreateCommand entity)
         {
-            var productCreateCommand = _mapper.Map<AuthorCreateCommand>(entity);
-            var result = await _mediator.Send(productCreateCommand);
+            var result = await _mediator.Send(entity);
             return _mapper.Map<AuthorDTO>(result);
         }
 
@@ -54,10 +53,9 @@ namespace LocalLibrary.Application.Services
             return _mapper.Map<AuthorDTO>(result);
         }
 
-        public async Task<AuthorDTO> Update(AuthorDTO entity)
+        public async Task<AuthorDTO> Update(AuthorUpdateCommand entity)
         {
-            var productUpdateCommand = _mapper.Map<AuthorCreateCommand>(entity);
-            var result = await _mediator.Send(productUpdateCommand);
+            var result = await _mediator.Send(entity);
             return _mapper.Map<AuthorDTO>(result);
         }
     }

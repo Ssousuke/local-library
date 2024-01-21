@@ -7,7 +7,7 @@ using MediatR;
 
 namespace LocalLibrary.Application.Services
 {
-    public class LanguageServices : IGenericServices<LanguageDTO>
+    public class LanguageServices : ILanguageServices
     {
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
@@ -18,10 +18,9 @@ namespace LocalLibrary.Application.Services
             _mediator = mediator;
         }
 
-        public async Task<LanguageDTO> Create(LanguageDTO entity)
+        public async Task<LanguageDTO> Create(LanguageCreateCommand entity)
         {
-            var genreCreateCommand = _mapper.Map<LanguageCreateCommand>(entity);
-            var result = await _mediator.Send(genreCreateCommand);
+            var result = await _mediator.Send(entity);
             return _mapper.Map<LanguageDTO>(result);
         }
 
@@ -54,10 +53,9 @@ namespace LocalLibrary.Application.Services
             return _mapper.Map<LanguageDTO>(result);
         }
 
-        public async Task<LanguageDTO> Update(LanguageDTO entity)
+        public async Task<LanguageDTO> Update(LanguageUpdateCommand entity)
         {
-            var genreUpdateCommand = _mapper.Map<LanguageUpdateCommand>(entity);
-            var result = await _mediator.Send(genreUpdateCommand);
+            var result = await _mediator.Send(entity);
             return _mapper.Map<LanguageDTO>(result);
         }
     }
