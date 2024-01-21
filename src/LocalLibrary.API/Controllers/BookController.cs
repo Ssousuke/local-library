@@ -1,4 +1,4 @@
-﻿using LocalLibrary.Application.DTO;
+﻿using LocalLibrary.Application.CQRS.Book.Commands;
 using LocalLibrary.Application.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,9 +8,9 @@ namespace LocalLibrary.API.Controllers
     [ApiController]
     public class BookController : ControllerBase
     {
-        private readonly IGenericServices<BookDTO> _services;
+        private readonly IBookServices _services;
 
-        public BookController(IGenericServices<BookDTO> services)
+        public BookController(IBookServices services)
         {
             _services = services;
         }
@@ -19,6 +19,8 @@ namespace LocalLibrary.API.Controllers
         public async Task<IActionResult> GetBooks()
         {
             var books = await _services.GetAll();
+            if (books is null)
+                return NoContent();
             return Ok(books);
         }
 
@@ -26,28 +28,47 @@ namespace LocalLibrary.API.Controllers
         public async Task<IActionResult> GetBookById(Guid id)
         {
             var book = await _services.GetById(id);
+            if (book is null)
+                return NoContent();
             return Ok(book);
         }
 
         [HttpPost("criar")]
-        public async Task<IActionResult> CreateBook(BookDTO bookDTO)
+        public async Task<IActionResult> CreateBook(BookCreateCommand bookDTO)
         {
             var book = await _services.Create(bookDTO);
+            if (book == null)
+                return UnprocessableEntity("Falha ao atualizar o registro. Verifique as informações e tente novamente.");
             return Ok(book);
         }
 
         [HttpPut("atualizar")]
-        public async Task<IActionResult> UpdateBook(BookDTO bookDTO)
+        public async Task<IActionResult> UpdateBook(BookUpdateCommand bookDTO)
         {
-            var book = await _services.Create(bookDTO);
+            var book = await _services.Update(bookDTO);
+            if (book == null)
+                return UnprocessableEntity("Falha ao atualizar o registro. Verifique as informações e tente novamente.");
             return Ok(book);
         }
 
         [HttpDelete("deletar/{id}")]
         public async Task<IActionResult> DeleteBookById(Guid id)
         {
-            var book = await _services.DeleteById(id);
-            return Ok(book);
+            try
+            {
+                var book = await _services.DeleteById(id);
+                if (!book)
+                    return UnprocessableEntity("Falha ao excluir o registro. Verifique as informações e tente novamente.");
+                return Ok("O registro foi excluido com sucesso.");
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound($"Registro com ID {id} não encontrado. Verifique o ID e tente novamente.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Erro interno do servidor ao processar a solicitação.");
+            }
         }
     }
 }
