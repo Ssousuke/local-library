@@ -8,10 +8,9 @@ namespace LocalLibrary.Application.DTO
         public Guid Id { get; set; }
 
         [JsonPropertyName("criado-em")]
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; }
 
         [JsonPropertyName("atualizado-em")]
-        public DateTime UpdatedAt { get; set; } = DateTime.Now;
-
+        public DateTime UpdatedAt { get; set; }
     }
 }
