@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace LocalLibrary.Application.CQRS.Genre
+namespace LocalLibrary.Application.CQRS.Genre.Commands
 {
     public abstract class GenreCommand : IRequest<Domain.Models.Genre>
     {
