@@ -6,6 +6,7 @@ using LocalLibrary.Domain.IRepository;
 using LocalLibrary.Domain.Models;
 using LocalLibrary.Infra.Data.Context;
 using LocalLibrary.Infra.Data.Repository;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +30,9 @@ namespace LocalLibrary.IoC
             services.AddScoped(typeof(IGenericServices<BookDTO>), typeof(BookServices));
             services.AddScoped(typeof(IGenericServices<GenreDTO>), typeof(GenreServices));
             services.AddScoped(typeof(IGenericServices<LanguageDTO>), typeof(LanguageServices));
+
+            var myHandler = AppDomain.CurrentDomain.Load("LocalLibrary.Application");
+            services.AddMediatR(x => x.RegisterServicesFromAssemblies(myHandler));
 
             services.AddAutoMapper(typeof(ProfileMap));
 
