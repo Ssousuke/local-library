@@ -32,7 +32,7 @@ namespace LocalLibrary.Infra.Data.Repository
             }
         }
 
-        public async Task<bool> DeleteByIsAsync(Guid id)
+        public async Task<bool> DeleteByIdAsync(Guid id)
         {
             var book = await _context.Books.SingleAsync(x => x.Id == id);
             if (book != null)

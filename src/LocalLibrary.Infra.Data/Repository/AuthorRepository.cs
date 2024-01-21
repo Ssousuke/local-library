@@ -32,7 +32,7 @@ namespace LocalLibrary.Infra.Data.Repository
             }
         }
 
-        public async Task<bool> DeleteByIsAsync(Guid id)
+        public async Task<bool> DeleteByIdAsync(Guid id)
         {
 
             var deleteId = await context.Authors.SingleAsync(x => x.Id == id);

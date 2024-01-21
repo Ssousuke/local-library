@@ -32,7 +32,7 @@ namespace LocalLibrary.Infra.Data.Repository
             }
         }
 
-        public async Task<bool> DeleteByIsAsync(Guid id)
+        public async Task<bool> DeleteByIdAsync(Guid id)
         {
             var genre = await _context.Genres.SingleAsync(x => x.Id == id);
             if (genre != null)
