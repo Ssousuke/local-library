@@ -1,4 +1,5 @@
-﻿using LocalLibrary.Domain.IRepository;
+﻿using LocalLibrary.Application.CQRS.Genre.Commands;
+using LocalLibrary.Domain.IRepository;
 using MediatR;
 
 namespace LocalLibrary.Application.CQRS.Genre.Handler
