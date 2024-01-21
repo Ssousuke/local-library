@@ -26,7 +26,7 @@ namespace LocalLibrary.Application.Services
 
         public Task<bool> DeleteById(Guid id)
         {
-            return _respository.DeleteByIsAsync(id);
+            return _respository.DeleteByIdAsync(id);
         }
 
         public async Task<IEnumerable<BookDTO>> GetAll()
