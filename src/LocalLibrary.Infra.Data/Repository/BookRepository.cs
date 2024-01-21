@@ -53,12 +53,16 @@ namespace LocalLibrary.Infra.Data.Repository
 
         public async Task<IEnumerable<Book>> GetAll()
         {
-            return await _context.Books.ToListAsync();
+            return await _context.Books.Include(x => x.Author)
+                                       .Include(x => x.Genre)
+                                       .Include(x => x.Language).ToListAsync();
         }
 
         public async Task<Book> GetByIdAsync(Guid id)
         {
-            return await _context.Books.SingleAsync(x => x.Id == id);
+            return await _context.Books.Include(x => x.Author)
+                                       .Include(x => x.Genre)
+                                       .Include(x => x.Language).SingleAsync(x => x.Id == id);
         }
 
         public async Task<Book> UpdateAsync(Book entity)
