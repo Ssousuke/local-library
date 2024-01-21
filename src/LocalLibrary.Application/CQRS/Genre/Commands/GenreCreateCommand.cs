@@ -1,6 +1,9 @@
-﻿namespace LocalLibrary.Application.CQRS.Genre.Commands
+﻿using MediatR;
+
+namespace LocalLibrary.Application.CQRS.Genre.Commands
 {
-    public class GenreCreateCommand : GenreCommand
+    public class GenreCreateCommand : IRequest<Domain.Models.Genre>
     {
+        public string Name { get; set; }
     }
 }
