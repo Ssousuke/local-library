@@ -4,7 +4,7 @@ using MediatR;
 
 namespace LocalLibrary.Application.CQRS.Genre.Handler
 {
-    public class GenreCreateCommandHandler : IRequestHandler<GenreCommand, Domain.Models.Genre>
+    public class GenreCreateCommandHandler : IRequestHandler<GenreCreateCommand, Domain.Models.Genre>
     {
         private readonly IGenericRepository<Domain.Models.Genre> _genreRepository;
 
@@ -13,7 +13,7 @@ namespace LocalLibrary.Application.CQRS.Genre.Handler
             _genreRepository = genreRepository;
         }
 
-        public async Task<Domain.Models.Genre> Handle(GenreCommand request, CancellationToken cancellationToken)
+        public async Task<Domain.Models.Genre> Handle(GenreCreateCommand request, CancellationToken cancellationToken)
         {
             var genre = new Domain.Models.Genre(request.Name);
             if (genre == null)
