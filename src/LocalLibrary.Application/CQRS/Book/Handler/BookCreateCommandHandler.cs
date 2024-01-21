@@ -15,7 +15,7 @@ namespace LocalLibrary.Application.CQRS.Book.Handler
 
         public async Task<Domain.Models.Book> Handle(BookCreateCommand request, CancellationToken cancellationToken)
         {
-            var book = new Domain.Models.Book(request.Title, request.ISBN, request.Summary, request.AuthorId, request.GenreId, request.LanguageId);
+            var book = new Domain.Models.Book(request.Title, request.Summary, request.ISBN, request.AuthorId, request.GenreId, request.LanguageId);
             if (book == null)
                 throw new ApplicationException($"Error could not be found.");
             return await _bookRepository.AddAsync(book);
