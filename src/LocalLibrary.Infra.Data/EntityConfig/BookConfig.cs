@@ -9,8 +9,8 @@ namespace LocalLibrary.Infra.Data.EntityConfig
         public void Configure(EntityTypeBuilder<Book> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.CreatedAt);
-            builder.Property(x => x.UpdatedAt);
+            builder.Property(x => x.CreatedAt).HasDefaultValue(DateTime.Now);
+            builder.Property(x => x.UpdatedAt).HasDefaultValue(DateTime.Now);
 
             builder.Property(x => x.Title).HasMaxLength(50).IsRequired();
             builder.Property(x => x.Summary).HasMaxLength(255).IsRequired();
