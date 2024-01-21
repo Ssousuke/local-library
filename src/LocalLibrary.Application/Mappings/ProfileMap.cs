@@ -25,13 +25,13 @@ namespace LocalLibrary.Application.Mappings
             CreateMap<BookDTO, BookRemoveCommand>().ReverseMap();
             CreateMap<BookDTO, BookUpdateCommand>().ReverseMap();
 
-            CreateMap<BookDTO, GenreCreateCommand>().ReverseMap();
-            CreateMap<BookDTO, GenreRemoveCommand>().ReverseMap();
-            CreateMap<BookDTO, GenreUpdateCommand>().ReverseMap();
+            CreateMap<GenreDTO, GenreCreateCommand>().ReverseMap();
+            CreateMap<GenreDTO, GenreRemoveCommand>().ReverseMap();
+            CreateMap<GenreDTO, GenreUpdateCommand>().ReverseMap();
 
-            CreateMap<BookDTO, LanguageCreateCommand>().ReverseMap();
-            CreateMap<BookDTO, LanguageRemoveCommand>().ReverseMap();
-            CreateMap<BookDTO, LanguageUpdateCommand>().ReverseMap();
+            CreateMap<LanguageDTO, LanguageCreateCommand>().ReverseMap();
+            CreateMap<LanguageDTO, LanguageRemoveCommand>().ReverseMap();
+            CreateMap<LanguageDTO, LanguageUpdateCommand>().ReverseMap();
         }
     }
 }
