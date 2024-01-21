@@ -1,6 +1,5 @@
 ﻿using LocalLibrary.Application.CQRS.Genre.Commands;
 using LocalLibrary.Application.Services.IServices;
-using LocalLibrary.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LocalLibrary.API.Controllers
