@@ -6,20 +6,18 @@ using LocalLibrary.Domain.Models;
 using LocalLibrary.Infra.Data.Context;
 using LocalLibrary.Infra.Data.Repository;
 using MediatR;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace LocalLibrary.IoC
 {
     public static class Ioc
     {
-        public static IServiceCollection AddInfraestructure(this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection AddInfraestructure(this IServiceCollection services)
         {
-            services.AddDbContext<ContextDB>(options => options
-               .UseSqlServer(config.GetConnectionString("Dev"), x => x
-                   .MigrationsAssembly(typeof(ContextDB).Assembly.FullName)));
-
             services.AddScoped(typeof(IGenericRepository<Author>), typeof(AuthorRepository));
             services.AddScoped(typeof(IGenericRepository<Book>), typeof(BookRepository));
             services.AddScoped(typeof(IGenericRepository<Genre>), typeof(GenreRepository));
