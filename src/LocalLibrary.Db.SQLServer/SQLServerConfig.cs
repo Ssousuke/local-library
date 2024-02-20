@@ -7,7 +7,7 @@ namespace LocalLibrary.Db.SQLServer;
 
 public static class SQLServerConfig
 {
-    public static IServiceCollection AddInfraestructureSQLServer(this IServiceCollection services, IConfiguration config)
+    public static IServiceCollection AddInfraestructureSQLServer(this IServiceCollection services)
     {
         var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
         var dbName = Environment.GetEnvironmentVariable("DB_NAME");

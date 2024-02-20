@@ -1,9 +1,11 @@
+using LocalLibrary.Db.SQLServer;
 using LocalLibrary.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddInfraestructure(builder.Configuration);
+builder.Services.AddInfraestructure();
+builder.Services.AddInfraestructureSQLServer(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
