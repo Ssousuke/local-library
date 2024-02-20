@@ -1,0 +1,38 @@
+version: '3.4'
+
+networks:
+  local_library:
+
+
+services:
+  ll-database:
+    container_name: local_library_db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - 1433:1433
+    environment:
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: 
+    networks:
+      - local_library
+
+  locallibrary.api:
+    container_name: local_library_api
+    image: ${DOCKER_REGISTRY-}locallibraryapi
+    build:
+      context: .
+      dockerfile: src/LocalLibrary.API/Dockerfile
+
+    ports:
+      - 8080:80
+
+    depends_on:
+      - ll-database
+
+    environment:
+      DB_HOST: ll-database
+      DB_NAME: LocalLibraryDB
+      DB_SA_PASSWORD: 
+
+    networks:
+      - local_library
